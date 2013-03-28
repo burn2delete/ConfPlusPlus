@@ -1,0 +1,22 @@
+{
+    "name": "projectmeta/confplusplus",
+    "description": "ConfPlusPlus - PHP Configuration Library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthew Ratzke",
+            "email": "matthew.003@me.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/symfony": "2.1.x"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "dev-master",
+        "behat/behat": "2.4.*@stable"
+    },
+    "autoload": {
+        "psr-0": { "projectmeta\\ConfPlusPlus": "src/" }
+    }
+}
