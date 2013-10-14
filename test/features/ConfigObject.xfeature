@@ -1,0 +1,39 @@
+Feature: ConfigObject
+    In order to manage configurations
+    as a Developer
+    I need to load and write them
+
+    Scenario Outline: Load a config object
+        Given an alias "<alias>"
+        And it is loaded
+        Then it should return php array
+
+        Scenarios:
+            | alias                           |
+            | loader.configplusplus.yaml      |
+            | loader.configplusplus.xml       |
+            | loader.configplusplus.php       |
+            | writer.configplusplus.yaml      |
+            | writer.configplusplus.xml       |
+            | writer.configplusplus.php       |
+            | config.configplusplus.test.yaml |
+            | config.configplusplus.test.xml  |
+            | config.configplusplus.test.php  |
+
+    Scenario Outline: Write a config object
+        Given an alias "<alias>"
+        And a config node "<node>" with a value "<value>"
+        And it is writen to config
+        Then it should return true
+
+        Scenarios:
+            | alias                           | node | value |
+            | loader.configplusplus.yaml      | | |
+            | loader.configplusplus.xml       | | |
+            | loader.configplusplus.php       | | |
+            | writer.configplusplus.yaml      | | |
+            | writer.configplusplus.xml       | | |
+            | writer.configplusplus.php       | | |
+            | config.configplusplus.test.yaml | | |
+            | config.configplusplus.test.xml  | | |
+            | config.configplusplus.test.php  | | |
