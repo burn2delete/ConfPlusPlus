@@ -3,7 +3,6 @@
 /*
  * This file is part of the ConfPlusPlus package.
  *
- * (c) Degree9 Solutions Inc.
  * (c) Matthew Ratzke <matthew.003@me.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -12,32 +11,94 @@
 
 namespace projectmeta\ConfPlusPlus\Loader;
 
-/**
- * YamlLoader.
- *
- * @author Matthew Ratzke <matthew.003@me.com>
- *
- * @api
- */
-class YamlLoader extends AbstractLoader
+use Symfony\Component\Config\Loader\FileLoader;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Parser as YamlParser;
+
+class YamlLoader extends FileLoader
 {
 
+    private $yamlParser;
+
     /**
-     * Load fresh config.
+     * Loads a Yaml file.
      *
-     * Config is loaded from source
-     *
-     * @api
+     * @param mixed  $file The resource
+     * @param string $type The resource type
      */
-    protected function loadFresh($input)
+    public function load($file, $type = null)
     {
+        $path = $this->locator->locate($file);
+
+        $content = $this->loadFile($path);
+
+        // empty file
+        if (null === $content) {
+            return;
+        }
+
+        // imports
+        $content = $this->parseImports($content, $file);
+
+        $this->parsedfilecontent[] = $content;
+
+        return $this->parsedfilecontent;
 
     }
 
-    protected function implementsCache()
+    /**
+     * Returns true if this class supports the given resource.
+     *
+     * @param mixed  $resource A resource
+     * @param string $type     The resource type
+     *
+     * @return Boolean true if this class supports the given resource, false otherwise
+     */
+    public function supports($resource, $type = null)
     {
-        return false;
-
+        return is_string($resource) && 'yml' === pathinfo($resource, PATHINFO_EXTENSION);
     }
 
+    /**
+     * Parses all imports
+     *
+     * @param array  $content
+     * @param string $file
+     */
+    private function parseImports($content, $file)
+    {
+        if (!isset($content['imports'])) {
+            return;
+        }
+
+        foreach ($content['imports'] as $import) {
+            $this->setCurrentDir(dirname($file));
+            $this->import($import['resource'], null, isset($import['ignore_errors']) ? (Boolean) $import['ignore_errors'] : false, $file);
+        }
+    }
+
+    /**
+     * Loads a YAML file.
+     *
+     * @param string $file
+     *
+     * @return array The file content
+     */
+    protected function loadFile($file)
+    {
+        if (!stream_is_local($file)) {
+            throw new InvalidArgumentException(sprintf('This is not a local file "%s".', $file));
+        }
+
+        if (!file_exists($file)) {
+            throw new InvalidArgumentException(sprintf('The service file "%s" is not valid.', $file));
+        }
+
+        if (null === $this->yamlParser) {
+            $this->yamlParser = new YamlParser();
+        }
+
+        return $this->yamlParser->parse(file_get_contents($file));
+    }
+   
 }

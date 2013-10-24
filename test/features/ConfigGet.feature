@@ -10,4 +10,4 @@ Feature: Config Get
 
     Examples:
     | settingId    |
-    | [bool][true] |
+    | bool         |

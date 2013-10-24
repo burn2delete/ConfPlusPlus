@@ -12,7 +12,11 @@
 namespace projectmeta\ConfPlusPlus\test;
 
 use projectmeta\ConfPlusPlus\Config\AbstractConfig;
+use projectmeta\ConfPlusPlus\Loader\YamlLoader;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+
 
 class YamlConfig extends AbstractConfig
 {
@@ -20,16 +24,42 @@ class YamlConfig extends AbstractConfig
     public function getConfigTreeBuilder()
     {
         
-        return;
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('test');
+        return $treeBuilder;
         
     }
     
     public function getResources()
     {
         
-        return;
+        $configDirectories = array(__DIR__);
+        $this->locator = new FileLocator($configDirectories);
+        return $this->locator->locate('test.yml', null, true);
         
     }
     
+    protected function registerLoaders()
+    {
+        
+        //default loaders will be here
+        return array(new YamlLoader($this->locator));
+        
+    }
+    
+    public function getBool()
+    {
+        
+        return $this->config['bool'];
+        
+    }
+    
+    public function setBool($newValue)
+    {
+        
+        $this->config['bool'] = $newValue;
+        
+    }
+
     
 }

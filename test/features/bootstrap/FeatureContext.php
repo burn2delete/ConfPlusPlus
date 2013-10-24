@@ -46,7 +46,7 @@ class FeatureContext extends BehatContext
      */                                                                                                                                                              
     public function itIsLoaded()                                                                                                                                     
     {                                                                                                                                                                
-        throw new PendingException();                                                                                                                                
+        $this->config->load();                                                                                                                                
     }
 
     
@@ -55,7 +55,12 @@ class FeatureContext extends BehatContext
      */                                                                                                                                                              
     public function theConfigPropertiesCanBeAccessed()                                                                                                               
     {                                                                                                                                                                
-        throw new PendingException();                                                                                                                                
+        if($this->config->get('bool') == true)
+        {
+            
+            print_r($this->config->get('bool'));
+            
+        }
     }
 
     /**                                                                                                                                                                  
@@ -71,7 +76,8 @@ class FeatureContext extends BehatContext
      */                                                                                                                                                              
     public function aSettingIdWithANewValue($arg1, $arg2)                                                                                                            
     {                                                                                                                                                                
-        throw new PendingException();                                                                                                                                
+        $this->settingID = $arg1;
+        $this->newValue = $arg2;
     }
     
     /**                                                                                                                                                              
@@ -79,15 +85,26 @@ class FeatureContext extends BehatContext
      */                                                                                                                                                              
     public function theSettingIsRetrievedFromTheConfig()                                                                                                             
     {                                                                                                                                                                
-        throw new PendingException();                                                                                                                                
+        if($this->config->get($this->settingID) == true)
+        {
+            
+            print_r($this->config->get($this->settingID));
+            
+        }                                                                                                                                
     }
     
     /**                                                                                                                                                              
      * @Then /^the Setting is changed in the Config$/                                                                                                                
      */                                                                                                                                                              
     public function theSettingIsChangedInTheConfig()                                                                                                                 
-    {                                                                                                                                                                
-        throw new PendingException();                                                                                                                                
+    {                                          
+        $this->config->set($this->settingID, $this->newValue);
+        if($this->config->get($this->settingID) != false)
+        {
+            
+            print_r($this->config->get($this->settingID));
+            
+        }                                                                                                                                
     }
     
 

@@ -10,4 +10,4 @@ Feature: Config Set
 
     Examples:
     | settingId    |  newValue  |
-    | [bool][true] |  false     |
+    | bool         |  false     |
