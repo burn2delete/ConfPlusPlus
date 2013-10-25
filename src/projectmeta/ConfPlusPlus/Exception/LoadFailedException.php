@@ -2,7 +2,7 @@
 
 namespace projectmeta\ConfPlusPlus\Exception;
 
-class LoadFailedException extends Exception
+class LoadFailedException extends \ErrorException
 {
     
     public function __construct($message)
