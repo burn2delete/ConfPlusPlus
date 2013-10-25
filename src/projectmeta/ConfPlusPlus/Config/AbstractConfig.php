@@ -12,6 +12,7 @@
 namespace projectmeta\ConfPlusPlus\Config;
 
 use projectmeta\ConfPlusPlus\Config\ConfigInterface;
+use projectmeta\ConfPlusPlus\Exception\LoadFailedException;
 use projectmeta\ConfPlusPlus\Loader\YamlLoader;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Processor;
@@ -66,14 +67,23 @@ abstract class AbstractConfig implements ConfigInterface
     {
         $resources = $this->getResources();
         
-        $this->loaderResolver = new LoaderResolver($this->registerLoaders());
+        if ($resources != null)
+        {
+            $this->loaderResolver = new LoaderResolver($this->registerLoaders());
         
-        $this->delegatingLoader = new DelegatingLoader($this->loaderResolver);
+            $this->delegatingLoader = new DelegatingLoader($this->loaderResolver);
         
-        $config = $this->delegatingLoader->load($resources);
+            $config = $this->delegatingLoader->load($resources);
         
-        $this->processedConfiguration = $this->processor->processConfiguration($this->getConfiguration(), $config);
+            $this->processedConfiguration = $this->processor->processConfiguration($this->getConfiguration(), $config);
 
+        }
+        else
+        {
+            
+            throw new LoadFailedException('Unable to load any resources. No resources found.');
+            
+        }
         
     }
     
