@@ -38,4 +38,11 @@ class Application extends BaseApplication
 
     }
 
+    protected function getConfigClass()
+    {
+
+        return null;
+
+    }
+
 }
