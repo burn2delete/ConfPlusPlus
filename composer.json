@@ -10,7 +10,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "symfony/symfony": "2.3.x"
+        "symfony/symfony": "2.4.x-dev"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "dev-master",
