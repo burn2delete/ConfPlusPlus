@@ -9,5 +9,5 @@ Feature: Config Set
     Then the Setting is changed in the Config
 
     Examples:
-    | settingId    |  newValue  |
-    | bool         |  false     |
+    | settingId  |  newValue  |
+    | bool       |  false     |

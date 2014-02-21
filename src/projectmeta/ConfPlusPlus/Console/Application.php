@@ -2,6 +2,7 @@
 
 namespace projectmeta\ConfPlusPlus\Console;
 
+use projectmeta\ConfPlusPlus\Exception\ApplicationConfigException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Config\Loader\DelegatingLoader;
@@ -16,7 +17,7 @@ use Composer\Command\Helper\DialogHelper as ComposerDialogHelper;
 class Application extends BaseApplication
 {
 
-    protected $appConfig = null;
+    public $appConfig = null;
 
     protected $configClass = null;
 
@@ -27,14 +28,18 @@ class Application extends BaseApplication
 
         $this->configClass = $this->getConfigClass();
 
-        if ($this->configClass != null)
+        if ($this->configClass == null)
         {
 
-            $this->appConfig = new ${$this->configClass}();
-
-            $this->appConfig->load();
+            throw new ApplicationConfigException('Application Config class not implemented!');
 
         }
+
+        $className = $this->configClass;
+
+        $this->appConfig = new $className();
+
+        $this->appConfig->load();
 
     }
 

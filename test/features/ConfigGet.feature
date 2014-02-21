@@ -9,5 +9,5 @@ Feature: Config Get
     Then the Setting is retrieved from the Config
 
     Examples:
-    | settingId    |
-    | bool         |
+    | settingId  |
+    | bool       |
