@@ -15,7 +15,7 @@ class ConfigCommand extends Command
 
         $configId = (preg_match('/:/', $this->getName()) == true) ? preg_replace('/:/', '', $this->getName()) : $this->getName();
 
-        if ($input->hasArgument(0))
+        if ($input->getArgument(0) != null)
         {
 
             $this->executeSet($configId, $input, $output);
