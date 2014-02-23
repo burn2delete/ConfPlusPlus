@@ -17,7 +17,7 @@ class YamlConfigBoolCommand extends ConfigCommand
             ->setName('config:bool')
             ->setDescription('Get/Set Bool in Config')
             ->addArgument(
-                'newValue',
+                'value',
                 InputArgument::OPTIONAL,
                 'true/false (not validated)'
             );

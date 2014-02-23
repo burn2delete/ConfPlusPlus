@@ -15,7 +15,7 @@ class ConfigCommand extends Command
 
         $configId = (preg_match('/:/', $this->getName()) == true) ? preg_replace('/:/', '', $this->getName()) : $this->getName();
 
-        if ($input->getArgument(0) != null)
+        if ($input->getArgument('value') != null)
         {
 
             $this->executeSet($configId, $input, $output);
@@ -38,7 +38,7 @@ class ConfigCommand extends Command
     protected function executeSet($configId, InputInterface $input, OutputInterface $output)
     {
 
-        $this->getApplication()->appConfig->set($configId, $input->getArgument(0));
+        $this->getApplication()->appConfig->set($configId, $input->getArgument('value'));
 
     }
 }

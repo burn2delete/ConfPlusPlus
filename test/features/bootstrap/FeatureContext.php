@@ -123,12 +123,7 @@ class FeatureContext extends BehatContext
     public function theSettingIsRetrievedFromTheApplicationConfig()
     {
         $tester = new CommandTester($this->configApp->find($this->settingID));
-        if($tester->execute(array()) == true)
-        {
-
-            print_r($tester->execute(array()));
-
-        }
+        $tester->execute(array());
     }
 
     /**
@@ -137,12 +132,7 @@ class FeatureContext extends BehatContext
     public function theSettingIsChangedInTheApplicationConfig()
     {
         $tester = new CommandTester($this->configApp->find($this->settingID));
-        if($tester->execute(array('newValue' => $this->newValue)) == true)
-        {
-
-            print_r($tester->execute(array('newValue' => $this->newValue)));
-
-        }
+        $tester->execute(array('value' => $this->newValue));
     }
 
 }
