@@ -52,7 +52,7 @@ abstract class AbstractConfig implements ConfigInterface
     public function get($configId)
     {
 
-        $this->accessor->getValue($this, $configId);
+        return $this->accessor->getValue($this, $configId);
 
     }
 
