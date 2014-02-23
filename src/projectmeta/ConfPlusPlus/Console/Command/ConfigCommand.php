@@ -18,13 +18,27 @@ class ConfigCommand extends Command
         if ($input->hasArgument(0))
         {
 
-            $this->getApplication()->appConfig->set($configId, $input->getArgument(0));
+            $this->executeSet($configId, $input, $output);
 
         } else {
 
-            $this->getApplication()->appConfig->get($configId);
+            $this->executeGet($configId, $input, $output);
 
         }
+
+    }
+
+    protected function executeGet($configId, InputInterface $input, OutputInterface $output)
+    {
+
+        $output->writeln($this->getApplication()->appConfig->get($configId));
+
+    }
+
+    protected function executeSet($configId, InputInterface $input, OutputInterface $output)
+    {
+
+        $this->getApplication()->appConfig->set($configId, $input->getArgument(0));
 
     }
 }
