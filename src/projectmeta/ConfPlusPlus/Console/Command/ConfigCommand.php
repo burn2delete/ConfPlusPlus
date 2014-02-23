@@ -13,7 +13,7 @@ class ConfigCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $configId = (preg_match('/[config]*:/i', $this->getName()) == true) ? preg_replace('/[config]*:/i', '', $this->getName()) : $this->getName();
+        $configId = (preg_match('/:/', $this->getName()) == true) ? preg_replace('/:/', '', $this->getName()) : $this->getName();
 
         if ($input->hasArgument(0))
         {

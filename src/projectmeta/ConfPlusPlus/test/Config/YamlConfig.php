@@ -61,5 +61,18 @@ class YamlConfig extends AbstractConfig
 
     }
 
+    public function getConfigBool()
+    {
+
+        return $this->config['bool'];
+
+    }
+
+    public function setConfigBool($newValue)
+    {
+
+        $this->config['bool'] = $newValue;
+
+    }
 
 }
