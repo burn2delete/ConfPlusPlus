@@ -26,6 +26,13 @@ class YamlConfig extends AbstractConfig
 
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('test');
+
+        $rootNode
+            ->children()
+                ->booleanNode('bool')->end()
+            ->end()
+        ;
+
         return $treeBuilder;
 
     }

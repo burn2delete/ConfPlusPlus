@@ -14,6 +14,7 @@ namespace projectmeta\ConfPlusPlus\Loader;
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use Symfony\Component\Config\Exception\FileLoaderLoadException;
 
 class YamlLoader extends FileLoader
 {
@@ -29,20 +30,17 @@ class YamlLoader extends FileLoader
     public function load($file, $type = null)
     {
         $path = $this->locator->locate($file);
-
         $content = $this->loadFile($path);
 
         // empty file
         if (null === $content) {
-            return;
+            throw new FileLoaderLoadException($path);
         }
 
         // imports
-        $content = $this->parseImports($content, $file);
+        $content = $this->parseImports($content, $path);
 
-        $this->parsedfilecontent[] = $content;
-
-        return $this->parsedfilecontent;
+        return $content;
 
     }
 
@@ -67,13 +65,14 @@ class YamlLoader extends FileLoader
      */
     private function parseImports($content, $file)
     {
+
         if (!isset($content['imports'])) {
-            return;
+            return $content;
         }
 
         foreach ($content['imports'] as $import) {
             $this->setCurrentDir(dirname($file));
-            $this->import($import['resource'], null, isset($import['ignore_errors']) ? (Boolean) $import['ignore_errors'] : false, $file);
+            return $this->import($import['resource'], null, isset($import['ignore_errors']) ? (Boolean) $import['ignore_errors'] : false, $file);
         }
     }
 
@@ -100,5 +99,5 @@ class YamlLoader extends FileLoader
 
         return $this->yamlParser->parse(file_get_contents($file));
     }
-   
+
 }

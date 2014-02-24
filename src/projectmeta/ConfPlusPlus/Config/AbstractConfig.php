@@ -75,7 +75,7 @@ abstract class AbstractConfig implements ConfigInterface
 
             $config = $this->delegatingLoader->load($resources);
 
-            $this->processedConfiguration = $this->processor->processConfiguration($this->getConfiguration(), $config);
+            $this->config = $this->processor->processConfiguration($this->getConfiguration(), $config);
 
         }
         else
